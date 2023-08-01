@@ -1,11 +1,8 @@
 package br.unb.dominio;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
 
 /**
  * @author
@@ -23,6 +20,20 @@ public class Aluno {
 	
 	@Column(name = "matricula")
 	private String matricula;
+	
+	@ManyToMany
+    @JoinTable(name = "aluno_disciplina",
+               joinColumns = @JoinColumn(name = "aluno_id"),
+               inverseJoinColumns = @JoinColumn(name = "disciplina_id"))
+    private List<Disciplina> disciplinas;
+
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
 
 	public Aluno() {
 	}

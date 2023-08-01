@@ -1,11 +1,8 @@
 package br.unb.dominio;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "disciplina")
@@ -26,6 +23,28 @@ public class Disciplina {
 	
 	@Column(name = "local")
 	private String local; // Bloco sala
+	
+	@ManyToMany(mappedBy = "disciplinas")
+    private List<Aluno> alunos;
+	
+	@ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
+
+    public List<Aluno> getAlunos() {
+		return alunos;
+	}
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+	public Professor getProfessor() {
+		return professor;
+	}
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	
 	
 	public int getId() {
 		return id;
