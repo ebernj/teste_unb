@@ -38,7 +38,7 @@
         
 		<p>
 		    <label for="disciplinas">Disciplinas:</label>
-		    <html:select property="disciplinasSelecionadas" multiple="true">
+		    <html:select property="disciplinasSelecionadas" multiple="true" style="width: 200px; background-color: #f0f0f0; border: 1px solid #ccc;">
 		        <c:forEach var="disciplina" items="${disciplinasDisponiveis}">
 		            <html:option value="${disciplina.id}">
 		                <c:out value="${disciplina.nome}"/>
