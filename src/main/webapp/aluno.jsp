@@ -2,6 +2,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ page import="br.unb.dominio.Disciplina" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 
 <html>
 <head>
@@ -16,7 +20,7 @@
 
     <html:form action="/aluno" method="post">
 
-        <html:hidden property="method" value="${alunoForm.id == 0 ? 'salvar' : 'atualizar'}"/>
+        <html:hidden property="method" value="${alunoForm.id == null || alunoForm.id == 0 ? 'salvar' : 'atualizar'}"/>
 		<html:hidden property="id" value="${alunoForm.id}"/> <!-- Incluímos o campo oculto para o ID -->
 		
 		<span style="color: red">
@@ -31,9 +35,19 @@
             <label for="matricula">Matrícula:</label>
             <html:text property="matricula" size="20"/>
         </p>
-
+        
+		<p>
+		    <label for="disciplinas">Disciplinas:</label>
+		    <html:select property="disciplinasSelecionadas" multiple="true">
+		        <c:forEach var="disciplina" items="${disciplinasDisponiveis}">
+		            <html:option value="${disciplina.id}">
+		                <c:out value="${disciplina.nome}"/>
+		            </html:option>
+		        </c:forEach>
+		    </html:select>
+		</p>
         <p>
-            <html:submit value="${alunoForm.id == 0 ? 'Salvar' : 'Atualizar'}"/>
+            <html:submit value="${alunoForm.id == null || alunoForm.id == 0 ? 'Salvar' : 'Atualizar'}"/>
         </p>
 
     </html:form>

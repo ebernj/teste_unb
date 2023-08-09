@@ -14,7 +14,9 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import br.unb.dao.DisciplinaDAO;
+import br.unb.dao.ProfessorDAO;
 import br.unb.dominio.Disciplina;
+import br.unb.dominio.Professor;
 
 public class DisciplinaAction extends Action {
 
@@ -41,7 +43,6 @@ public class DisciplinaAction extends Action {
         
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
-
         }
 
         String method = request.getParameter("method");
@@ -53,10 +54,11 @@ public class DisciplinaAction extends Action {
             switch (method) {
                 case "salvar":
                     disciplina = new Disciplina(disciplinaForm.getNome(), disciplinaForm.getCurso(), disciplinaForm.getTurma(), disciplinaForm.getLocal());
+                    disciplina.setProfessor(disciplinaForm.getProfessorselecionadoById());
                     disciplinaDAO.salvar(disciplina);
                     break;
                 case "editar":
-                    int id = Integer.parseInt(request.getParameter("id"));
+                	Long id = Long.valueOf(request.getParameter("id"));
                     disciplina = disciplinaDAO.buscarPorId(id);
                     disciplinaForm.setId(disciplina.getId());
                     disciplinaForm.setNome(disciplina.getNome());
@@ -66,17 +68,22 @@ public class DisciplinaAction extends Action {
                     break;
                 case "atualizar":
                     disciplina = new Disciplina(disciplinaForm.getId(), disciplinaForm.getNome(), disciplinaForm.getCurso(), disciplinaForm.getTurma(), disciplinaForm.getLocal());
+                    disciplina.setProfessor(disciplinaForm.getProfessorselecionadoById());
                     disciplinaDAO.atualizar(disciplina);
                     break;
                 case "excluir":
-                    id = Integer.parseInt(request.getParameter("id"));
-                    disciplinaDAO.excluir(id);
+                    id = Long.valueOf(request.getParameter("id"));
+                    boolean excluiu = disciplinaDAO.excluir(id);
                     break;
             }
         }
 
         List<Disciplina> disciplinas = disciplinaDAO.listarTodos();
         request.setAttribute("disciplinas", disciplinas);
+        
+        ProfessorDAO profDao = new ProfessorDAO();
+        List<Professor> professores = profDao.listarTodos();
+        request.setAttribute("professores", professores);
 
         return mapping.findForward("success");
     }

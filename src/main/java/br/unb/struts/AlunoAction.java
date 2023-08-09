@@ -14,7 +14,9 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import br.unb.dao.AlunoDAO;
+import br.unb.dao.DisciplinaDAO;
 import br.unb.dominio.Aluno;
+import br.unb.dominio.Disciplina;
 
 public class AlunoAction extends Action {
 
@@ -39,33 +41,38 @@ public class AlunoAction extends Action {
                 saveErrors(request, errors);
             }
 
-        	
-        	
         	switch (method) {
                 case "salvar":
                     Aluno aluno = new Aluno(alunoForm.getNome(), alunoForm.getMatricula());
+                    aluno.setDisciplinas(alunoForm.getDisciplinasFromIds());
                     alunoDAO.salvar(aluno);
                     break;
                 case "editar":
-                    int id = Integer.parseInt(request.getParameter("id"));
+                    Long id = Long.valueOf(request.getParameter("id"));
                     aluno = alunoDAO.buscarPorId(id);
                     alunoForm.setId(aluno.getId());
                     alunoForm.setNome(aluno.getNome());
                     alunoForm.setMatricula(aluno.getMatricula());
+                    aluno.setDisciplinas(alunoForm.getDisciplinasFromIds());
                     break;
                 case "atualizar":
                     aluno = new Aluno(alunoForm.getId(), alunoForm.getNome(), alunoForm.getMatricula());
                     alunoDAO.atualizar(aluno);
                     break;
                 case "excluir":
-                    id = Integer.parseInt(request.getParameter("id"));
+                    id = Long.valueOf(request.getParameter("id"));
                     alunoDAO.excluir(id);
+                    alunoForm.setId(0L);
                     break;
             }
         }
 
         List<Aluno> alunos = alunoDAO.listarTodos();
         request.setAttribute("alunos", alunos);
+        
+        DisciplinaDAO disciplinaDao = new DisciplinaDAO();
+        List<Disciplina>disciplinasDisponiveis = disciplinaDao.listarTodos();
+        request.setAttribute("disciplinasDisponiveis", disciplinasDisponiveis);
 
         return mapping.findForward("success");
     }

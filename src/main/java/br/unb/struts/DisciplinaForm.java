@@ -2,19 +2,37 @@ package br.unb.struts;
 
 import org.apache.struts.action.ActionForm;
 
+import br.unb.dominio.Professor;
+
 public class DisciplinaForm extends ActionForm {
 	
-	private int id;
+	private Long id;
 	private String nome;
 	private String curso;
 	private String turma;
 	private String local;
 	
-	public int getId() {
+	private Long professorSelecionado;
+	
+	public Long getProfessorSelecionado() {
+		return professorSelecionado;
+	}
+	public void setProfessorSelecionado(Long professorSelecionado) {
+		this.professorSelecionado = professorSelecionado;
+	}
+	
+	public Professor getProfessorselecionadoById() {
+		Professor p = new Professor();
+		p.setId(professorSelecionado);
+		return p;
+	}
+	
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(Long long1) {
+		this.id = long1;
 	}
 	public String getNome() {
 		return nome;

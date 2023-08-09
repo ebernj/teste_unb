@@ -10,7 +10,7 @@ public class Disciplina {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id; //gerado pelo banco
+	private Long id; //gerado pelo banco
 	
 	@Column(name = "nome")
 	private String nome; // nome da disciplina
@@ -46,11 +46,11 @@ public class Disciplina {
 
 	
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(Long disciplinaId) {
+		this.id = disciplinaId;
 	}
 	public String getNome() {
 		return nome;
@@ -86,7 +86,7 @@ public class Disciplina {
 		this.turma = turma;
 		this.local = local;
 	}
-	public Disciplina(int id, String nome, String curso, String turma, String local) {
+	public Disciplina(Long id, String nome, String curso, String turma, String local) {
 		super();
 		this.id = id;
 		this.nome = nome;

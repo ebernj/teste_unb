@@ -4,31 +4,22 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Professor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String nome;
+public class Professor extends Pessoa{
 
     @OneToMany(mappedBy = "professor")
     private List<Disciplina> disciplinas;
-
-	public Long getId() {
-		return id;
+    
+    public Professor() {
+	
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Professor(String nome) {
+		setNome(nome);
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public Professor(long id, String nome) {
+		setId(id);
+		setNome(nome);
 	}
 
 	public List<Disciplina> getDisciplinas() {
@@ -37,6 +28,11 @@ public class Professor {
 
 	public void setDisciplinas(List<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
+	}
+	
+	@Override
+	public String toString() {
+		return getNome();
 	}
 
 }

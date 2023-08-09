@@ -46,7 +46,7 @@ public class ProfessorDAO {
 		session.close();
 	}
 
-	public void excluir(int id) throws SQLException {
+	public void excluir(Long id) throws SQLException {
 		System.out.println("ProfessorDAO::excluir::professor->"+id);
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
@@ -58,7 +58,7 @@ public class ProfessorDAO {
 		session.close();
 	}
 
-	public Professor buscarPorId(int id) throws SQLException {
+	public Professor buscarPorId(long id) throws SQLException {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Professor professor = (Professor) session.get(Professor.class, id);

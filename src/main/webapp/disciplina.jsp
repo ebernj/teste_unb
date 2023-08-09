@@ -2,6 +2,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="br.unb.dominio.Professor" %>
 
 <html>
 <head>
@@ -16,7 +18,7 @@
 
     <html:form action="/disciplina" method="post">
 
-        <html:hidden property="method" value="${disciplinaForm.id == 0 ? 'salvar' : 'atualizar'}"/>
+        <html:hidden property="method" value="${disciplinaForm.id == 0 || disciplinaForm.id == null ? 'salvar' : 'atualizar'}"/>
 		<html:hidden property="id" value="${disciplinaForm.id}"/>
 		
 		<span style="color: red">
@@ -39,7 +41,20 @@
             <html:text property="local" size="50"/>
         </p>
         <p>
-            <html:submit value="${disciplinaForm.id == 0 ? 'Salvar' : 'Atualizar'}"/>
+		    <label for="professores">Professor:</label>
+		    <html:select property="professorSelecionado" style="width: 200px; background-color: #f0f0f0; border: 1px solid #ccc;">
+		        <c:forEach var="professor" items="${professores}">
+		            <html:option value="${professor.id}">
+		                <c:out value="${professor.nome}"/>
+		            </html:option>
+		        </c:forEach>
+		    </html:select>
+		</p>
+        
+        
+        
+        <p>
+            <html:submit value="${disciplinaForm.id == 0 || disciplinaForm.id == null ? 'Salvar' : 'Atualizar'}"/>
         </p>
 
     </html:form>
@@ -52,7 +67,8 @@
             <th>Nome</th>
             <th>Curso</th>
             <th>Turma</th>
-            <th>Local</th>                                    
+            <th>Local</th> 
+            <th>Professor</th>                                      
             <th>Editar</th>
             <th>Excluir</th>
         </tr>
@@ -62,7 +78,8 @@
                 <td><bean:write name="disciplina" property="nome" /></td>
                 <td><bean:write name="disciplina" property="curso" /></td>
                 <td><bean:write name="disciplina" property="local" /></td>
-                <td><bean:write name="disciplina" property="turma" /></td>                                
+                <td><bean:write name="disciplina" property="turma" /></td>    
+                <td><bean:write name="disciplina" property="professor" /></td>                                  
                 <td>
                     <a href="<%= request.getContextPath() %>/disciplina.do?method=editar&id=<bean:write name='disciplina' property='id' />">Editar</a>
                 </td>

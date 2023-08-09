@@ -30,6 +30,11 @@ input[name="nome"], input[name="curso"] , input[name="turma"], input[name="local
   border: 1px solid #ccc;
 }
 
+.combobox {
+    width: 200px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
 
 
 /* Estilo para o campo de texto de matrícula */

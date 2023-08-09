@@ -1,19 +1,55 @@
 package br.unb.struts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.struts.action.ActionForm;
+import br.unb.dominio.*;
 
 public class AlunoForm extends ActionForm {
-	private int id;
+	private Long id;
 	private String nome;
 	private String matricula;
 	private String method;
+	
+	private String[] disciplinasSelecionadas; // Array para armazenar IDs das disciplinas selecionadas
 
-	public int getId() {
+    public String[] getDisciplinasSelecionadas() {
+        return disciplinasSelecionadas;
+    }
+    
+    public void setDisciplinasSelecionadas(String[] disciplinasSelecionadas) {
+        this.disciplinasSelecionadas = disciplinasSelecionadas;
+    }
+
+    
+    public List<Disciplina> getDisciplinasFromIds() {
+        List<Disciplina> disciplinas = new ArrayList<>();
+        
+        if(disciplinasSelecionadas!=null) {
+        
+	        for(String id : disciplinasSelecionadas) {
+	
+	            Long disciplinaId = Long.valueOf(id);
+	
+	            Disciplina disciplina = new Disciplina();
+	            disciplina.setId(disciplinaId);
+	
+	            if (disciplina != null) {
+	                disciplinas.add(disciplina);
+	            }
+	        }
+        }
+        return disciplinas;
+    }
+
+    
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(Long long1) {
+		this.id = long1;
 	}
 
 	public String getNome() {
@@ -39,9 +75,5 @@ public class AlunoForm extends ActionForm {
 	public void setMethod(String method) {
 		this.method = method;
 	}
-
-	
-	// Getters e Setters
-	// ...
 
 }

@@ -46,19 +46,26 @@ public class DisciplinaDAO {
 		session.close();
 	}
 
-	public void excluir(int id) throws SQLException {
+	public boolean excluir(Long id) throws SQLException {
 		System.out.println("DisciplinaDAO::excluir::disciplina->"+id);
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 
 		Disciplina disciplina = (Disciplina) session.get(Disciplina.class, id);
-		session.delete(disciplina);
-
-		tx.commit();
-		session.close();
+		
+		if(disciplina.getAlunos()!=null && disciplina.getAlunos().size()>0) {
+			System.out.println("DisciplinaDAO::excluir::disciplina-> Não pode excluir disciplina."+id);
+			session.close();
+			return false;
+		}else {
+			session.delete(disciplina);
+			tx.commit();
+			session.close();
+			return true;
+		}
 	}
 
-	public Disciplina buscarPorId(int id) throws SQLException {
+	public Disciplina buscarPorId(Long id) throws SQLException {
 		System.out.println("DisciplinaDAO::buscarPorId::disciplina->"+id);
 		Session session = HibernateUtil.getSessionFactory().openSession();
 

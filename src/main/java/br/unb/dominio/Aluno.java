@@ -10,13 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "aluno")
-public class Aluno {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	@Column(name = "nome")
-	private String nome;
+public class Aluno extends Pessoa {
 	
 	@Column(name = "matricula")
 	private String matricula;
@@ -39,31 +33,14 @@ public class Aluno {
 	}
 
 	public Aluno(String nome, String matricula) {
-		this.nome = nome;
-		this.matricula = matricula;
+		setNome(nome);
+		setMatricula(matricula);
 	}
 
-	public Aluno(int id, String nome, String matricula) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.matricula = matricula;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public Aluno(long id, String nome, String matricula2) {
+		setId(id);
+		setNome(nome);
+		setMatricula(matricula2);
 	}
 
 	public String getMatricula() {
@@ -76,6 +53,6 @@ public class Aluno {
 
 	@Override
 	public String toString() {
-		return "Aluno{" + "id=" + id + ", nome='" + nome + '\'' + ", matricula='" + matricula + '\'' + '}';
+		return "Aluno{" + "id=" + super.getId() + ", nome='" + super.getNome() + '\'' + ", matricula='" + matricula + '\'' + '}';
 	}
 }
