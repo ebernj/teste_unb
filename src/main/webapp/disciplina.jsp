@@ -41,7 +41,7 @@
             <html:text property="local" size="50"/>
         </p>
         <p>
-		    <label for="professores">Professor:</label>
+		    <label for="professores">Selecioe o Professor:</label>
 		    <html:select property="professorSelecionado" style="width: 200px; background-color: #f0f0f0; border: 1px solid #ccc;">
 		        <c:forEach var="professor" items="${professores}">
 		            <html:option value="${professor.id}">
